@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harve Utah — Market Research</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --orange:#FF6E00;--orange-lt:#FFF0E6;--orange-dk:#8B3D00;
+  --dark:#0F0F14;--blue:#1A3A5C;--teal:#0F6E56;--teal-lt:#E1F5EE;
+  --g50:#F4F4F2;--g200:#DDDDDD;--g500:#5A5A6A;--g800:#1E1E2A;
+  --red:#CC2200;--white:#FFFFFF;--r:10px;--rs:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#EEECEA;color:var(--g800);min-height:100vh}
+
+nav{background:var(--dark);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:54px;position:sticky;top:0;z-index:100}
+.logo{color:#fff;font-weight:700;font-size:17px}.logo span{color:var(--orange)}
+.nav-links{display:flex;gap:3px}
+.nb{background:transparent;border:none;color:#999;font-size:13px;padding:6px 11px;border-radius:var(--rs);cursor:pointer;transition:.15s}
+.nb:hover{color:#fff;background:rgba(255,255,255,.08)}
+.nb.active{color:#fff;background:rgba(255,110,0,.18)}
+.badge{background:var(--orange);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:20px;margin-left:4px}
+
+.page{display:none}.page.active{display:block}
+
+/* HERO */
+.hero{background:var(--dark);padding:36px 20px 28px;text-align:center}
+.hero h1{color:#fff;font-size:24px;font-weight:700;margin-bottom:8px}
+.hero p{color:#AAA;font-size:13px;line-height:1.6;max-width:460px;margin:0 auto 18px}
+.chips{display:flex;gap:7px;justify-content:center;flex-wrap:wrap}
+.chip{background:rgba(255,255,255,.1);color:#DDD;font-size:11px;padding:3px 11px;border-radius:20px}
+
+/* FORM */
+.fw{max-width:620px;margin:0 auto;padding:20px 14px 48px}
+.sl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g500);margin:26px 0 10px;padding-bottom:5px;border-bottom:1px solid var(--g200)}
+.qc{background:var(--white);border:1px solid var(--g200);border-radius:var(--r);padding:14px 16px;margin-bottom:10px}
+.qn{font-size:11px;font-weight:600;color:var(--orange);margin-bottom:4px}
+.qt{font-size:14px;font-weight:500;color:var(--g800);margin-bottom:11px;line-height:1.5}
+.qh{font-size:12px;color:var(--g500);margin-bottom:10px;font-style:italic}
+.req{color:var(--red);margin-left:2px}
+.opts{display:flex;flex-direction:column;gap:7px}
+.or{display:flex;align-items:center;gap:9px;cursor:pointer;padding:8px 10px;border-radius:var(--rs);border:1px solid var(--g200);transition:.15s}
+.or:hover{border-color:var(--orange);background:var(--orange-lt)}
+.or.sel{border-color:var(--orange);background:var(--orange-lt)}
+.or input{accent-color:var(--orange);width:15px;height:15px;flex-shrink:0}
+.ol{font-size:13px;color:var(--g800)}
+.scale-row{display:flex;gap:6px;flex-wrap:wrap}
+.sb{width:42px;height:42px;border-radius:var(--rs);border:1px solid var(--g200);background:var(--white);font-size:14px;font-weight:500;cursor:pointer;color:var(--g800);transition:.15s}
+.sb:hover{border-color:var(--orange);background:var(--orange-lt)}
+.sb.sel{background:var(--orange);color:#fff;border-color:var(--orange)}
+.scale-lbl{display:flex;justify-content:space-between;font-size:11px;color:var(--g500);margin-top:5px}
+textarea,input[type=text]{width:100%;border:1px solid var(--g200);border-radius:var(--rs);padding:9px 11px;font-size:13px;font-family:inherit;color:var(--g800);resize:vertical;min-height:76px;outline:none;transition:border-color .15s}
+textarea:focus,input[type=text]:focus{border-color:var(--orange)}
+input[type=text]{min-height:unset;height:38px}
+select{width:100%;border:1px solid var(--g200);border-radius:var(--rs);padding:7px 10px;font-size:13px;font-family:inherit;color:var(--g800);background:var(--white);outline:none;height:38px}
+select:focus{border-color:var(--blue)}
+.btn{width:100%;padding:13px;border:none;border-radius:var(--r);font-size:15px;font-weight:600;cursor:pointer;margin-top:18px;transition:opacity .15s}
+.btn-orange{background:var(--orange);color:#fff}
+.btn-blue{background:var(--blue);color:#fff}
+.btn:hover{opacity:.9}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.ok{background:var(--teal-lt);border:1px solid var(--teal);border-radius:var(--r);padding:18px;text-align:center;margin-top:18px}
+.ok h3{color:var(--teal);font-size:15px;margin-bottom:5px}
+.ok p{color:#085041;font-size:13px}
+.note-lbl{font-size:11px;font-weight:600;color:var(--blue);margin-top:10px;margin-bottom:3px}
+.note-area{border-left:3px solid var(--blue);border-radius:0 var(--rs) var(--rs) 0;background:#EEF3F8;min-height:56px}
+.note-area::placeholder{color:#7A8FA0}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ml{font-size:12px;font-weight:600;color:var(--g500);margin-bottom:3px;display:block}
+
+/* DASHBOARD */
+.dh{background:var(--dark);padding:18px 20px;display:flex;align-items:center;justify-content:space-between}
+.dh h2{color:#fff;font-size:17px;font-weight:600}
+.dh span{color:#AAA;font-size:12px}
+.dw{max-width:880px;margin:0 auto;padding:20px 14px 48px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.sc{background:var(--white);border:1px solid var(--g200);border-radius:var(--r);padding:12px 14px}
+.sc.o{border-top:3px solid var(--orange)}.sc.b{border-top:3px solid var(--blue)}.sc.t{border-top:3px solid var(--teal)}.sc.g{border-top:3px solid var(--g500)}
+.sv{font-size:26px;font-weight:700}.sl2{font-size:11px;color:var(--g500);margin-top:2px}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.cc{background:var(--white);border:1px solid var(--g200);border-radius:var(--r);padding:14px 16px}
+.cc.full{grid-column:1/-1}
+.ct{font-size:13px;font-weight:600;color:var(--g800);margin-bottom:12px}
+.cs{font-size:11px;color:var(--g500);margin-top:-8px;margin-bottom:10px}
+.ot{background:var(--g50);border-radius:var(--rs);padding:7px 9px;font-size:12px;color:var(--g800);margin-bottom:5px;line-height:1.5;border-left:3px solid var(--orange)}
+.es{text-align:center;padding:32px 16px;color:var(--g500);font-size:13px}
+.rt{width:100%;border-collapse:collapse;font-size:12px}
+.rt th{background:var(--g50);padding:7px 10px;text-align:left;font-size:10px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--g200)}
+.rt td{padding:9px 10px;border-bottom:1px solid var(--g200);vertical-align:top}
+.rt tr:last-child td{border-bottom:none}
+.tag{display:inline-block;font-size:10px;padding:2px 7px;border-radius:20px;font-weight:500}
+.to{background:var(--orange-lt);color:var(--orange-dk)}.tb{background:#E8F0F8;color:var(--blue)}
+.sb2{background:transparent;border:1px solid var(--g200);color:var(--g500);font-size:12px;padding:5px 12px;border-radius:var(--rs);cursor:pointer;margin-top:10px}
+.sb2:hover{border-color:var(--orange);color:var(--orange)}
+
+@media(max-width:580px){
+  .stats{grid-template-columns:1fr 1fr}
+  .cg{grid-template-columns:1fr}
+  .cc.full{grid-column:1}
+  .meta-grid{grid-template-columns:1fr}
+}
+</style>
+
+<nav>
+  <div class="logo">HARVE<span>.</span></div>
+  <div class="nav-links">
+    <button class="nb active" onclick="pg('pub',this)">Public survey</button>
+    <button class="nb" onclick="pg('int',this)">In-person interview</button>
+    <button class="nb" onclick="pg('dash',this)">Dashboard <span class="badge" id="bc">0</span></button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 1 — PESQUISA PÚBLICA
+═══════════════════════════════════════════════════════ -->
+<div id="page-pub" class="page active">
+  <div class="hero">
+    <h1>Help shape the future of tech education in Utah</h1>
+    <p>We're exploring bringing a new type of in-person tech training to Utah County. Your answers take 8–10 minutes and are completely anonymous.</p>
+    <div class="chips">
+      <span class="chip">Eagle Mountain &amp; Lehi</span>
+      <span class="chip">Date Analytics</span>
+      <span class="chip">Digital Marketing</span>
+      <span class="chip">AI &amp; Automation</span>
+    </div>
+  </div>
+
+  <div class="fw" id="pub-form">
+
+    <div class="sl">Section A — About you</div>
+
+    <div class="qc">
+      <div class="qn">Q1</div>
+      <div class="qt">Which best describes your current situation?<span class="req">*</span></div>
+      <div class="opts" id="pq1">
+        <label class="or"><input type="radio" name="pq1" value="Employed in tech"><span class="ol">Employed in tech</span></label>
+        <label class="or"><input type="radio" name="pq1" value="Employed outside tech"><span class="ol">Employed outside tech</span></label>
+        <label class="or"><input type="radio" name="pq1" value="Self-employed or business owner"><span class="ol">Self-employed or business owner</span></label>
+        <label class="or"><input type="radio" name="pq1" value="Currently job searching"><span class="ol">Currently job searching</span></label>
+        <label class="or"><input type="radio" name="pq1" value="Other"><span class="ol">Other</span></label>
+      </div>
+    </div>
+
+    <div class="qc">
+      <div class="qn">Q2</div>
+      <div class="qt">Are you currently considering a career change or major skill upgrade?<span class="req">*</span></div>
+      <div class="opts" id="pq2">
+        <label class="or"><input type="radio" name="pq2" value="Yes, actively"><span class="ol">Yes, actively</span></label>
+        <label class="or"><input type="radio" name="pq2" value="Yes, thinking about it"><span class="ol">Yes, thinking about it</span></label>
+        <label class="or"><input type="radio" name="pq2" value="Not right now"><span class="ol">Not right now</span></label>
+        <label class="or"><input type="radio" name="pq2" value="No"><span class="ol">No</span></label>
+      </div>
+    </div>
+
+    <div class="sl">Section B — Learning behavior &amp; bootcamp experience</div>
+
+    <div class="qc">
+      <div class="qn">Q3</div>
+      <div class="qt">How have you learned new professional skills in the past? (Select all that apply)</div>
+      <div class="opts" id="pq3">
+        <label class="or"><input type="checkbox" name="pq3" value="Online courses (Coursera, Udemy)"><span class="ol">Online courses (Coursera, Udemy)</span></label>
+        <label class="or"><input type="checkbox" name="pq3" value="In-person bootcamp"><span class="ol">In-person bootcamp</span></label>
+        <label class="or"><input type="checkbox" name="pq3" value="On-the-job"><span class="ol">On-the-job</span></label>
+        <label class="or"><input type="checkbox" name="pq3" value="YouTube"><span class="ol">YouTube</span></label>
+        <label class="or"><input type="checkbox" name="pq3" value="College or university"><span class="ol">College or university</span></label>
+        <label class="or"><input type="checkbox" name="pq3" value="Coaching"><span class="ol">Coaching</span></label>
+        <label class="or"><input type="checkbox" name="pq3" value="No formal training"><span class="ol">No formal training</span></label>
+      </div>
+    </div>
+
+    <div class="qc">
+      <div class="qn">Q4</div>
+      <div class="qt">If you needed to learn a technical skill for career growth, which format would you trust most to get real results?<span class="req">*</span></div>
+      <div class="opts" id="pq4">
+        <label class="or"><input type="radio" name="pq4" value="Fully online self-paced"><span class="ol">Fully online self-paced</span></label>
+        <label class="or"><input type="radio" name="pq4" value="Live online classes"><span class="ol">Live online classes</span></label>
+        <label class="or"><input type="radio" name="pq4" value="In-person classes"><span class="ol">In-person classes</span></label>
+        <label class="or"><input type="radio" name="pq4" value="Hybrid"><span class="ol">Hybrid</span></label>
+        <label class="or"><input type="radio" name="pq4" value="No importa"><span class="ol">No importa</span></label>
+      </div>
+    </div>
+
+    <div class="qc">
+      <div class="qn">Q5</div>
+      <div class="qt">Have you ever enrolled in or seriously considered a coding bootcamp or tech training program?<span class="req">*</span></div>
+      <div class="opts" id="pq5">
+        <label class="or"><input type="radio" name="pq5" value="Yes, completed one"><span class="ol">Yes, completed one</span></label>
+        <label class="or"><input type="radio" name="pq5" value="Yes, enrolled but did not finish"><span class="ol">Yes, enrolled but did not finish</span></label>
+        <label class="or"><input type="radio" name="pq5" value="Researched but did not enroll"><span class="ol">Researched but did not enroll</span></label>
+        <label class="or"><input type="radio" name="pq5" value="No, nunca considerei"><span class="ol">No, nunca considerei</span></label>
+      </div>
+    </div>
+
+    <div class="qc">
+      <div class="qn">Q6</div>
+      <div class="qt">If you have experience with a bootcamp (completed or researched), what was your biggest frustration or concern?</div>
+      <div class="opts" id="pq6">
+        <label class="or"><input type="radio" name="pq6" value="Price"><span class="ol">Price</span></label>
+        <label class="or"><input type="radio" name="pq6" value="Online-only format"><span class="ol">Online-only format</span></label>
+        <label class="or"><input type="radio" name="pq6" value="No local in-person option"><span class="ol">No local in-person option</span></label>
+        <label class="or"><input type="radio" name="pq6" value="Lack of instructor support"><span class="ol">Lack of instructor support</span></label>
+        <label class="or"><input type="radio" name="pq6" value="Uncertain job outcomes"><span class="ol">Uncertain job outcomes</span></label>
+        <label class="or"><input type="radio" name="pq6" value="Too time-intensive"><span class="ol">Too time-intensive</span></label>
+        <label class="or"><input type="radio" name="pq6" value="No issues — it was great"><span class="ol">No issues — it was great</span></label>
+        <label class="or"><input type="radio" name="pq6" value="N/A — never looked into one"><span class="ol">N/A — never looked into one</span></label>
+      </div>
+    </div>
+
+    <div class="qc">
+      <div class="qn">Q7</div>
+      <div class="qt">What would make an in-person tech training program feel clearly different and better than a typical bootcamp?</div>
+      <textarea name="pq7" placeholder="Your answer..."></textarea>
+    </div>
+
+    <div class="sl">Section C — Logistics &amp; commitment</div>
+
+    <div class="qc">
+      <div class="qn">Q8</div>
+      <div class="qt">Would attending in-person classes two evenings per week (6:30–9:30 PM) be realistic for your schedule?<span class="req">*</span></div>
+      <div class="opts" id="pq8">
+        <label class="or"><input type="radio" name="pq8" value="Yes, easily"><span class="ol">Yes, easily</span></label>
+        <label class="or"><input type="radio" name="pq8" value="Yes, with some adjustments"><span class="ol">Yes, with some adjustments</span></label>
+        <label class="or"><input type="radio" name="pq8" value="Very difficult"><span class="ol">Very difficult</span></label>
+        <label class="or"><input type="radio" name="pq8" value="No"><span class="ol">No</span></label>
+      </div>
+    </div>
+
+    <div class="qc">
+      <div class="qn">Q9</div>
+      <div class="qt">How far would you reasonably commute for an in-person program?<span class="req">*</span></div>
+      <div class="opts" id="pq9">
+        <label class="or"><input type="radio" name="pq9" value="Less than 15 min"><span class="ol">Less than 15 min</span></label>
+        <label class="or"><input type="radio" name="pq9" value="15–30 min"><span class="ol">15–30 min</span></label>
+        <label class="or"><input type="radio" name="pq9" value="30–45 min"><span class="ol">30–45 min</span></label>
+        <label class="or"><input type="radio" name="pq9" value="No me deslocaria — apenas online"><span class="ol">No me deslocaria — apenas online</span></label>
+      </div>
+    </div>
+
+    <div class="sl">Section D — Concept reaction</div>
+
+    <div class="qc">
+      <div class="qn">Q10</div>
+      <div class="qt">A 4-month in-person tech program (data analytics, digital marketing, or AI tools), twice a week evenings, with real projects and industry instructors. How interested would you be?<span class="req">*</span></div>
+      <div class="scale-row" id="scale-pq10">
+        <button class="sb" onclick="sel('pq10',1,this)">1</button>
+        <button class="sb" onclick="sel('pq10',2,this)">2</button>
+        <button class="sb" onclick="sel('pq10',3,this)">3</button>
+        <button class="sb" onclick="sel('pq10',4,this)">4</button>
+        <button class="sb" onclick="sel('pq10',5,this)">5</button>
+      </div>
+      <div class="scale-lbl"><span>Not at all interested</span><span>Very interested</span></div>
+    </div>
+
+    <div class="qc">
+      <div class="qn">Q11</div>
+      <div class="qt">What price range would feel fair for this type of program if it leads to a real career outcome?<span class="req">*</span></div>
+      <div class="opts" id="pq11">
+        <label class="or"><input type="radio" name="pq11" value="Under $1,500"><span class="ol">Under $1,500</span></label>
+        <label class="or"><input type="radio" name="pq11" value="$1,500–$2,500"><span class="ol">$1,500–$2,500</span></label>
+        <label class="or"><input type="radio" name="pq11" value="$2,500–$4,000"><span class="ol">$2,500–$4,000</span></label>
+        <label class="or"><input type="radio" name="pq11" value="$4,000–$6,000"><span class="ol">$4,000–$6,000</span></label>
+        <label class="or"><input type="radio" name="pq11" value="Over $6,000 if the outcome is guaranteed"><span class="ol">Over $6,000 if the outcome is guaranteed</span></label>
+      </div>
+    </div>
+
+    <div class="qc">
+      <div class="qn">Q12</div>
+      <div class="qt">What is the one thing that would make you trust and choose this program over others? (Short answer)</div>
+      <textarea name="pq12" placeholder="Your answer..."></textarea>
+    </div>
+
+    <div class="qc">
+      <div class="qn">Q13</div>
+      <div class="qt">What is the main barrier that would stop you from enrolling today? (Short answer)</div>
+      <textarea name="pq13" placeholder="Your answer..."></textarea>
+    </div>
+
+    <button class="btn btn-orange" onclick="subPub()">Submit my answers</button>
+    <div id="pub-ok" style="display:none" class="ok">
+      <h3>Thank you!</h3>
+      <p>Your response has been recorded. We really appreciate your time and honesty.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 2 — ENTREVISTA PRESENCIAL
+═══════════════════════════════════════════════════════ -->
+<div id="page-int" class="page">
+  <div style="background:var(--blue);padding:18px 20px">
+    <h2 style="color:#fff;font-size:17px;font-weight:600">One-on-One Interview Guide</h2>
+    <p style="color:#9AB;font-size:13px;margin-top:3px">Fill this out during the conversation. One submission = one interview.</p>
+  </div>
+
+  <div class="fw">
+
+    <!-- META -->
+    <div class="qc" style="border-color:var(--blue)">
+      <div style="font-size:13px;font-weight:500;margin-bottom:10px">Session info (private)</div>
+      <div class="meta-grid">
+        <div>
+          <span class="ml">Respondent name or code</span>
+          <input type="text" id="i-name" placeholder="e.g. Interview #3 or John S.">
+        </div>
+        <div>
+          <span class="ml">Segment</span>
+          <select id="i-seg">
+            <option value="">Select...</option>
+            <option>Career changer</option>
+            <option>Tech upskilling professional</option>
+            <option>Small business owner / entrepreneur</option>
+            <option>LDS community contact</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div>
+          <span class="ml">Where did you meet them?</span>
+          <select id="i-src">
+            <option value="">Select...</option>
+            <option>LDS ward / stake event</option>
+            <option>Valley Crossroads Chamber</option>
+            <option>Kiln / coworking space</option>
+            <option>Silicon Slopes event</option>
+            <option>Personal referral</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div>
+          <span class="ml">Date</span>
+          <input type="text" id="i-date" placeholder="e.g. May 15, 2026">
+        </div>
+      </div>
+    </div>
+
+    <!-- TEMPO -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:16px">
+      <div style="background:#E8F0F8;border-radius:var(--rs);padding:7px 8px;text-align:center;font-size:11px;color:var(--blue);font-weight:500">Warm-up<br>2 min</div>
+      <div style="background:#E8F0F8;border-radius:var(--rs);padding:7px 8px;text-align:center;font-size:11px;color:var(--blue);font-weight:500">Learning history<br>2 min</div>
+      <div style="background:#E8F0F8;border-radius:var(--rs);padding:7px 8px;text-align:center;font-size:11px;color:var(--blue);font-weight:500">Logistics<br>2 min</div>
+      <div style="background:var(--orange-lt);border-radius:var(--rs);padding:7px 8px;text-align:center;font-size:11px;color:var(--orange-dk);font-weight:500">Concept<br>6 min</div>
+    </div>
+
+    <!-- Q1 Warm-up -->
+    <div class="qc">
+      <div class="qn">Q1 — Warm-up</div>
+      <div class="qt">Tell me a bit about what you do professionally and where you're headed — career-wise, what's on your mind these days?</div>
+      <div class="qh">Listen for: current pain, ambition, openness to change</div>
+      <textarea name="iq1" placeholder="Notes from their answer..."></textarea>
+    </div>
+
+    <!-- Q2 Learning history -->
+    <div class="qc">
+      <div class="qn">Q2 — Learning history de aprendizado</div>
+      <div class="qt">Have you ever taken a course, bootcamp, or training program to develop a professional skill? How did that go?</div>
+      <div class="qh">Listen for: bootcamp experience, frustration with online-only, what worked vs what did not</div>
+      <textarea name="iq2" placeholder="Notes from their answer..."></textarea>
+    </div>
+
+    <!-- Q3 Learning history -->
+    <div class="qc">
+      <div class="qn">Q3 — Learning history de aprendizado</div>
+      <div class="qt">If you had to pick up a new technical skill today — say data analysis or digital marketing — how would you go about it?</div>
+      <div class="qh">Listen for: self-directed vs structured instinct, online vs in-person preference</div>
+      <textarea name="iq3" placeholder="Notes from their answer..."></textarea>
+    </div>
+
+    <!-- BOOTCAMP Q1 -->
+    <div class="qc" style="border-left:4px solid var(--orange)">
+      <div class="qn" style="color:var(--orange-dk)">Bootcamp Q1</div>
+      <div class="qt">Have you ever looked into a bootcamp — like DevPoint Labs, V School, Nucamp, or others? What made you consider it or not go for it?</div>
+      <div class="qh">Listen for: awareness of local options, pricing reaction, what attracted them, what stopped them. This tells you your main acquisition barrier or opportunity.</div>
+      <textarea name="iq-b1" placeholder="Notes from their answer..."></textarea>
+    </div>
+
+    <!-- BOOTCAMP Q2 -->
+    <div class="qc" style="border-left:4px solid var(--orange)">
+      <div class="qn" style="color:var(--orange-dk)">Bootcamp Q2</div>
+      <div class="qt">Do you know anyone who did a bootcamp? How did it go for them — did they actually land a job or use the skills?</div>
+      <div class="qh">Listen for: secondhand skepticism, success stories, word-of-mouth perception. Often more honest than asking about their own experience.</div>
+      <textarea name="iq-b2" placeholder="Notes from their answer..."></textarea>
+    </div>
+
+    <!-- BOOTCAMP Q3 -->
+    <div class="qc" style="border-left:4px solid var(--orange)">
+      <div class="qn" style="color:var(--orange-dk)">Bootcamp Q3</div>
+      <div class="qt">When you imagine an in-person class with 15–20 people, an instructor who works in the field, and a real project to build — how does that compare to what you have seen from bootcamps?</div>
+      <div class="qh">Listen for: immediate contrast with prior experiences, what excites vs. worries them. Surfaces the exact positioning language Harve should use.</div>
+      <textarea name="iq-b3" placeholder="Notes from their answer..."></textarea>
+    </div>
+
+    <!-- Q4 Logistics -->
+    <div class="qc">
+      <div class="qn">Q4 — Logistics check</div>
+      <div class="qt">If there was an in-person program two evenings a week in Eagle Mountain or Lehi — say 6:30 to 9:30 PM — would that fit your life right now?</div>
+      <div class="qh">Utah-specific: commute tolerance, family dinner, church schedule (avoid Tue/Thu)</div>
+      <div class="opts" id="iq4">
+        <label class="or"><input type="radio" name="iq4" value="Yes, easily"><span class="ol">Yes, easily</span></label>
+        <label class="or"><input type="radio" name="iq4" value="Yes, with some adjustments"><span class="ol">Yes, with some adjustments</span></label>
+        <label class="or"><input type="radio" name="iq4" value="Very difficult"><span class="ol">Very difficult</span></label>
+        <label class="or"><input type="radio" name="iq4" value="No"><span class="ol">No</span></label>
+      </div>
+    </div>
+
+    <!-- Q5 Valor -->
+    <div class="qc">
+      <div class="qn">Q5 — Value &amp; trust</div>
+      <div class="qt">What would this program need to offer or prove for you to actually sign up — not just consider it?</div>
+      <div class="qh">Listen for: job placement data, employer partnerships, alumni stories, refund guarantees</div>
+      <textarea name="iq5" placeholder="Notes from their answer..."></textarea>
+    </div>
+
+    <!-- Q6 Valor -->
+    <div class="qc">
+      <div class="qn">Q6 — Value &amp; trust</div>
+      <div class="qt">What's the main thing that would stop you from doing it, even if it sounded great?</div>
+      <div class="qh">Listen for: time, cost, skepticism about outcomes, family pushback, financial risk</div>
+      <textarea name="iq6" placeholder="Notes from their answer..."></textarea>
+    </div>
+
+    <!-- Q7 Concept -->
+    <div class="qc">
+      <div class="qn">Q7 — Concept test</div>
+      <div class="qt">Four months, in-person twice a week evenings, real projects, instructors who work in the industry. Topics like data analytics, digital marketing, or AI automation. Pricing $3,500–$4,500. What is your gut reaction?</div>
+      <div class="qh">Let them react fully before probing. Then ask: "What would make that price feel worth it?"</div>
+      <textarea name="iq7" placeholder="Their exact words..."></textarea>
+      <div class="note-lbl">Your private note</div>
+      <textarea class="note-area" name="iq7-n" placeholder="Body language, hesitation, energy level..."></textarea>
+    </div>
+
+    <!-- Q8 Concept -->
+    <div class="qc">
+      <div class="qn">Q8 — Concept test</div>
+      <div class="qt">If you could design the ideal version of this program for your situation, what would it look like?</div>
+      <div class="qh">Open-ended closer — often surfaces the most valuable insights</div>
+      <textarea name="iq8" placeholder="Their exact words..."></textarea>
+    </div>
+
+    <!-- SUA AVALIAÇÃO -->
+    <div class="sl" style="border-color:var(--blue);color:var(--blue)">Your assessment (private)</div>
+
+    <div class="qc">
+      <div class="qn">Overall interest level — your assessment as interviewer</div>
+      <div class="scale-row" id="scale-iass">
+        <button class="sb" onclick="sel('iass',1,this)">1</button>
+        <button class="sb" onclick="sel('iass',2,this)">2</button>
+        <button class="sb" onclick="sel('iass',3,this)">3</button>
+        <button class="sb" onclick="sel('iass',4,this)">4</button>
+        <button class="sb" onclick="sel('iass',5,this)">5</button>
+      </div>
+      <div class="scale-lbl"><span>Cold</span><span>Strong lead</span></div>
+    </div>
+
+    <div class="qc">
+      <div class="qn">Biggest insight</div>
+      <div class="qt">Most surprising or unexpected insight from this conversation</div>
+      <textarea name="i-ins" placeholder="What caught you off guard? What did you not expect?"></textarea>
+    </div>
+
+    <div class="qc">
+      <div class="qn">Cohort 1 candidate?</div>
+      <div class="opts" id="i-cand">
+        <label class="or"><input type="radio" name="icand" value="Definitely yes"><span class="ol">Definitely yes</span></label>
+        <label class="or"><input type="radio" name="icand" value="Probably yes"><span class="ol">Probably yes</span></label>
+        <label class="or"><input type="radio" name="icand" value="Maybe"><span class="ol">Maybe</span></label>
+        <label class="or"><input type="radio" name="icand" value="Probably not"><span class="ol">Probably not</span></label>
+        <label class="or"><input type="radio" name="icand" value="Definitely not"><span class="ol">Definitely not</span></label>
+      </div>
+    </div>
+
+    <button class="btn btn-blue" onclick="subInt()">Save interview session</button>
+    <div id="int-ok" style="display:none" class="ok">
+      <h3>Session saved!</h3>
+      <p>Go to the Dashboard to see all results. For the next interview, scroll back up and fill in a new session.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 3 — DASHBOARD
+═══════════════════════════════════════════════════════ -->
+<div id="page-dash" class="page">
+  <div class="dh">
+    <h2>Research Dashboard</h2>
+    <span>Updates with each response</span>
+  </div>
+  <div class="dw">
+
+    <div class="stats">
+      <div class="sc o"><div class="sv" id="d-tot">0</div><div class="sl2">Total responses</div></div>
+      <div class="sc b"><div class="sv" id="d-int">0</div><div class="sl2">In-person interviews</div></div>
+      <div class="sc t"><div class="sv" id="d-avg">—</div><div class="sl2">Avg interest (Q10)</div></div>
+      <div class="sc g"><div class="sv" id="d-sch">—</div><div class="sl2">Schedule fit (yes)</div></div>
+    </div>
+
+    <div class="cg">
+      <div class="cc"><div class="ct">Q2 — Considering career change?</div><canvas id="c-q2" height="200"></canvas></div>
+      <div class="cc"><div class="ct">Q4 — Format they trust most</div><canvas id="c-q4" height="200"></canvas></div>
+      <div class="cc"><div class="ct">Q5 — Bootcamp experience</div><canvas id="c-q5" height="200"></canvas></div>
+      <div class="cc"><div class="ct">Q6 — Biggest bootcamp frustration</div><canvas id="c-q6" height="200"></canvas></div>
+      <div class="cc"><div class="ct">Q8 — Schedule fit (yes)</div><canvas id="c-q8" height="200"></canvas></div>
+      <div class="cc"><div class="ct">Q9 — Max commute</div><canvas id="c-q9" height="200"></canvas></div>
+      <div class="cc"><div class="ct">Q11 — Price range</div><canvas id="c-q11" height="200"></canvas></div>
+      <div class="cc full"><div class="ct">Q10 — Interest level distribution (1–5)</div><div class="cs">How interested are people in the program concept?</div><canvas id="c-q10" height="110"></canvas></div>
+    </div>
+
+    <div class="cc" style="margin-bottom:14px">
+      <div class="ct">Q12 — What would make you trust this program?</div>
+      <div id="d-q12"><div class="es">No responses yet.</div></div>
+    </div>
+
+    <div class="cc" style="margin-bottom:14px">
+      <div class="ct">Q13 — Main barrier to enrolling</div>
+      <div id="d-q13"><div class="es">No responses yet.</div></div>
+    </div>
+
+    <div class="cc">
+      <div class="ct">All responses</div>
+      <div style="overflow-x:auto">
+        <table class="rt" id="resp-tbl">
+          <thead><tr>
+            <th>#</th><th>Tipo</th><th>Q1 Situation</th><th>Q4 Format</th><th>Q5 Bootcamp</th><th>Q8 Schedule</th><th>Q10</th><th>Q11 Price</th>
+          </tr></thead>
+          <tbody id="resp-body"><tr><td colspan="8" class="es">No responses yet.</td></tr></tbody>
+        </table>
+      </div>
+      <button class="sb2" onclick="loadSample()">Load sample data to preview dashboard</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const R=[];const SV={};let CH={};
+
+function pg(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(id==='dash')render();
+}
+
+function sel(k,v,btn){
+  SV[k]=v;
+  const c=document.getElementById('scale-'+k);
+  if(c)c.querySelectorAll('.sb').forEach(b=>b.classList.remove('sel'));
+  if(btn)btn.classList.add('sel');
+}
+
+document.querySelectorAll('.or input').forEach(inp=>{
+  inp.addEventListener('change',()=>{
+    const name=inp.name;
+    if(inp.type==='radio'){
+      document.querySelectorAll(`input[name="${name}"]`).forEach(r=>r.closest('.or').classList.remove('sel'));
+    }
+    inp.closest('.or').classList.add('sel');
+  });
+});
+
+const gr=n=>{const e=document.querySelector(`input[name="${n}"]:checked`);return e?e.value:'';};
+const gcb=n=>[...document.querySelectorAll(`input[name="${n}"]:checked`)].map(e=>e.value);
+const gta=n=>{const e=document.querySelector(`textarea[name="${n}"]`);return e?e.value.trim():'';};
+
+function subPub(){
+  const req=['pq1','pq2','pq4','pq5','pq8','pq9','pq11'];
+  for(const q of req){if(!gr(q)){alert('Please answer all required questions (marked with *) before submitting.');return;}}
+  if(!SV['pq10']){alert('Please select an interest level for Q10.');return;}
+  R.push({src:'Public survey',ts:new Date().toLocaleString('pt-BR'),
+    q1:gr('pq1'),q2:gr('pq2'),q3:gcb('pq3').join(', '),
+    q4:gr('pq4'),q5:gr('pq5'),q6:gr('pq6'),
+    q7:gta('pq7'),q8:gr('pq8'),q9:gr('pq9'),
+    q10:SV['pq10'],q11:gr('pq11'),
+    q12:gta('pq12'),q13:gta('pq13')});
+  upd();
+  document.getElementById('pub-ok').style.display='block';
+  document.querySelector('.btn-orange').disabled=true;
+}
+
+function subInt(){
+  R.push({src:'Interview',ts:new Date().toLocaleString('pt-BR'),
+    nome:document.getElementById('i-name').value,
+    seg:document.getElementById('i-seg').value,
+    onde:document.getElementById('i-src').value,
+    data:document.getElementById('i-date').value,
+    q1:gta('iq1'),q2:gta('iq2'),q3:gta('iq3'),
+    bq1:gta('iq-b1'),bq2:gta('iq-b2'),bq3:gta('iq-b3'),
+    q4:gr('iq4'),q5:gta('iq5'),q6:gta('iq6'),
+    q7:gta('iq7'),q8:gta('iq8'),
+    q10:SV['iass'],ins:gta('i-ins'),cand:gr('icand')});
+  upd();
+  document.getElementById('int-ok').style.display='block';
+}
+
+function upd(){document.getElementById('bc').textContent=R.length;}
+
+function cnt(field,vals){return vals.map(v=>R.filter(r=>r[field]===v).length);}
+
+function render(){
+  const tot=R.length;
+  const ints=R.filter(r=>r.src==='Interview').length;
+  document.getElementById('d-tot').textContent=tot;
+  document.getElementById('d-int').textContent=ints;
+  const ints10=R.map(r=>r.q10).filter(v=>v);
+  document.getElementById('d-avg').textContent=ints10.length?(ints10.reduce((a,b)=>a+b,0)/ints10.length).toFixed(1):'—';
+  const sy=R.filter(r=>r.q8&&r.q8.startsWith('Sim')).length;
+  document.getElementById('d-sch').textContent=tot?Math.round(sy/tot*100)+'%':'—';
+
+  pie('c-q2','q2',['Yes, actively','Yes, thinking about it','Not right now','No'],['#FF6E00','#FA9A50','#CCCCCC','#5A5A6A']);
+  pie('c-q4','q4',['In-person classes','Hybrid','Live online classes','Fully online self-paced','No importa'],['#0F6E56','#5DCAA5','#1A3A5C','#85B7EB','#CCC']);
+  pie('c-q5','q5',['Yes, completed one','Yes, enrolled but did not finish','Researched but did not enroll','No, nunca considerei'],['#0F6E56','#FA9A50','#FF6E00','#CCC']);
+  pie('c-q6','q6',['Price','Online-only format','No local in-person option','Lack of instructor support','Uncertain job outcomes','Too time-intensive','No issues — it was great','N/A — never looked into one'],['#CC2200','#FF6E00','#FA9A50','#1A3A5C','#5A5A6A','#888','#0F6E56','#CCC']);
+  pie('c-q8','q8',['Yes, easily','Yes, with some adjustments','Very difficult','No'],['#0F6E56','#5DCAA5','#FA9A50','#CC2200']);
+  pie('c-q9','q9',['Less than 15 min','15–30 min','30–45 min','No me deslocaria — apenas online'],['#0F6E56','#5DCAA5','#FA9A50','#CC2200']);
+  pie('c-q11','q11',['Under $1,500','$1,500–$2,500','$2,500–$4,000','$4,000–$6,000','Over $6,000 if the outcome is guaranteed'],['#CC2200','#FA9A50','#FF6E00','#0F6E56','#085041']);
+  bar('c-q10',R.map(r=>r.q10).filter(v=>v),[1,2,3,4,5],['#EEE','#FAC775','#FF9A50','#FF6E00','#CC4400']);
+
+  const q12s=R.map(r=>r.q12).filter(v=>v&&v.length>3);
+  const q13s=R.map(r=>r.q13).filter(v=>v&&v.length>3);
+  document.getElementById('d-q12').innerHTML=q12s.length?q12s.map(t=>`<div class="ot">${esc(t)}</div>`).join(''):'<div class="es">No responses yet.</div>';
+  document.getElementById('d-q13').innerHTML=q13s.length?q13s.map(t=>`<div class="ot">${esc(t)}</div>`).join(''):'<div class="es">No responses yet.</div>';
+
+  const tb=document.getElementById('resp-body');
+  if(!R.length){tb.innerHTML='<tr><td colspan="8" class="es">No responses yet.</td></tr>';return;}
+  tb.innerHTML=R.map((r,i)=>`
+    <tr>
+      <td>${i+1}</td>
+      <td><span class="tag ${r.src==='Interview'?'tb':'to'}">${r.src==='Interview'?'Interview':'Survey'}</span></td>
+      <td style="font-size:11px">${r.q1||'—'}</td>
+      <td style="font-size:11px">${r.q4||'—'}</td>
+      <td style="font-size:11px">${r.q5||'—'}</td>
+      <td style="font-size:11px">${r.q8||'—'}</td>
+      <td style="text-align:center"><strong>${r.q10||'—'}</strong></td>
+      <td style="font-size:11px">${r.q11||'—'}</td>
+    </tr>`).join('');
+}
+
+function pie(id,field,labels,colors){
+  const data=labels.map(v=>R.filter(r=>r[field]===v).length);
+  const has=data.some(v=>v>0);
+  if(CH[id])CH[id].destroy();
+  const ctx=document.getElementById(id);if(!ctx)return;
+  CH[id]=new Chart(ctx,{type:'doughnut',data:{labels,datasets:[{data:has?data:[1],backgroundColor:has?colors:['#EEE'],borderWidth:0}]},options:{plugins:{legend:{position:'right',labels:{font:{size:10},padding:7,boxWidth:11}},tooltip:{enabled:has}},cutout:'52%',maintainAspectRatio:true}});
+}
+
+function bar(id,vals,bins,colors){
+  const data=bins.map(v=>vals.filter(x=>x==v).length);
+  if(CH[id])CH[id].destroy();
+  const ctx=document.getElementById(id);if(!ctx)return;
+  CH[id]=new Chart(ctx,{type:'bar',data:{labels:bins.map(v=>`${v}`),datasets:[{data,backgroundColor:colors,borderWidth:0,borderRadius:4}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:11}},grid:{color:'#EEE'}},x:{ticks:{font:{size:11}},grid:{display:false}}},maintainAspectRatio:true}});
+}
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function loadSample(){
+  R.push(...[
+    {src:'Public survey',q1:'Employed outside tech',q2:'Yes, actively',q4:'In-person classes',q5:'Researched but did not enroll',q6:'Price',q7:'Instructors who actually work in the field',q8:'Yes, with some adjustments',q9:'15–30 min',q10:4,q11:'$2,500–$4,000',q12:'Seeing real local graduates with real jobs',q13:'Time — I have two kids'},
+    {src:'Interview',q1:'Self-employed or business owner',q2:'Yes, thinking about it',q4:'In-person classes',q5:'No, nunca considerei',q8:'Yes, easily',q9:'15–30 min',q10:5,q11:'$2,500–$4,000',q12:'Testimonials from local people in my community',q13:'No tenho certeza se consigo aprender aos 45 anos'},
+    {src:'Public survey',q1:'Employed in tech',q2:'Not right now',q4:'Hybrid',q5:'Yes, completed one',q6:'Online-only format',q8:'Yes, easily',q9:'Less than 15 min',q10:3,q11:'$2,500–$4,000',q12:'Reputation from people in my ward',q13:'Already doing OK — needs a bigger pain point'},
+    {src:'Interview',q1:'Employed outside tech',q2:'Yes, actively',q4:'In-person classes',q5:'Yes, enrolled but did not finish',q6:'No local in-person option',q8:'Yes, with some adjustments',q9:'15–30 min',q10:5,q11:'$2,500–$4,000',q12:'Job placement stats and an employer who endorses the program',q13:'Price — mas aberta a parcelamento'},
+    {src:'Public survey',q1:'Currently job searching',q2:'Yes, actively',q4:'In-person classes',q5:'No, nunca considerei',q8:'Yes, easily',q9:'30–45 min',q10:4,q11:'$1,500–$2,500',q12:'Results guarantee',q13:'Financial risk — no savings'},
+  ]);
+  upd();render();
+  document.querySelector('.sb2').textContent='Sample data loaded';
+  document.querySelector('.sb2').disabled=true;
+}
+</script>
