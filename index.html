@@ -14,7 +14,6 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#EEECEA;color:var(--g800);min-height:100vh}
-
 nav{background:var(--dark);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:54px;position:sticky;top:0;z-index:100}
 .logo{color:#fff;font-weight:700;font-size:17px}.logo span{color:var(--orange)}
 .nav-links{display:flex;gap:3px}
@@ -22,17 +21,12 @@ nav{background:var(--dark);padding:0 20px;display:flex;align-items:center;justif
 .nb:hover{color:#fff;background:rgba(255,255,255,.08)}
 .nb.active{color:#fff;background:rgba(255,110,0,.18)}
 .badge{background:var(--orange);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:20px;margin-left:4px}
-
 .page{display:none}.page.active{display:block}
-
-/* HERO */
 .hero{background:var(--dark);padding:36px 20px 28px;text-align:center}
 .hero h1{color:#fff;font-size:24px;font-weight:700;margin-bottom:8px}
 .hero p{color:#AAA;font-size:13px;line-height:1.6;max-width:460px;margin:0 auto 18px}
 .chips{display:flex;gap:7px;justify-content:center;flex-wrap:wrap}
 .chip{background:rgba(255,255,255,.1);color:#DDD;font-size:11px;padding:3px 11px;border-radius:20px}
-
-/* FORM */
 .fw{max-width:620px;margin:0 auto;padding:20px 14px 48px}
 .sl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g500);margin:26px 0 10px;padding-bottom:5px;border-bottom:1px solid var(--g200)}
 .qc{background:var(--white);border:1px solid var(--g200);border-radius:var(--r);padding:14px 16px;margin-bottom:10px}
@@ -69,8 +63,6 @@ select:focus{border-color:var(--blue)}
 .note-area::placeholder{color:#7A8FA0}
 .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .ml{font-size:12px;font-weight:600;color:var(--g500);margin-bottom:3px;display:block}
-
-/* DASHBOARD */
 .dh{background:var(--dark);padding:18px 20px;display:flex;align-items:center;justify-content:space-between}
 .dh h2{color:#fff;font-size:17px;font-weight:600}
 .dh span{color:#AAA;font-size:12px}
@@ -94,7 +86,6 @@ select:focus{border-color:var(--blue)}
 .to{background:var(--orange-lt);color:var(--orange-dk)}.tb{background:#E8F0F8;color:var(--blue)}
 .sb2{background:transparent;border:1px solid var(--g200);color:var(--g500);font-size:12px;padding:5px 12px;border-radius:var(--rs);cursor:pointer;margin-top:10px}
 .sb2:hover{border-color:var(--orange);color:var(--orange)}
-
 @media(max-width:580px){
   .stats{grid-template-columns:1fr 1fr}
   .cg{grid-template-columns:1fr}
@@ -112,23 +103,20 @@ select:focus{border-color:var(--blue)}
   </div>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════════
-     PÁGINA 1 — PESQUISA PÚBLICA
-═══════════════════════════════════════════════════════ -->
+<!-- PUBLIC SURVEY -->
 <div id="page-pub" class="page active">
   <div class="hero">
     <h1>Help shape the future of tech education in Utah</h1>
     <p>We're exploring bringing a new type of in-person tech training to Utah County. Your answers take 8–10 minutes and are completely anonymous.</p>
     <div class="chips">
       <span class="chip">Eagle Mountain &amp; Lehi</span>
-      <span class="chip">Date Analytics</span>
+      <span class="chip">Data Analytics</span>
       <span class="chip">Digital Marketing</span>
       <span class="chip">AI &amp; Automation</span>
     </div>
   </div>
 
   <div class="fw" id="pub-form">
-
     <div class="sl">Section A — About you</div>
 
     <div class="qc">
@@ -178,7 +166,7 @@ select:focus{border-color:var(--blue)}
         <label class="or"><input type="radio" name="pq4" value="Live online classes"><span class="ol">Live online classes</span></label>
         <label class="or"><input type="radio" name="pq4" value="In-person classes"><span class="ol">In-person classes</span></label>
         <label class="or"><input type="radio" name="pq4" value="Hybrid"><span class="ol">Hybrid</span></label>
-        <label class="or"><input type="radio" name="pq4" value="No importa"><span class="ol">No importa</span></label>
+        <label class="or"><input type="radio" name="pq4" value="Doesn't matter"><span class="ol">Doesn't matter</span></label>
       </div>
     </div>
 
@@ -189,7 +177,7 @@ select:focus{border-color:var(--blue)}
         <label class="or"><input type="radio" name="pq5" value="Yes, completed one"><span class="ol">Yes, completed one</span></label>
         <label class="or"><input type="radio" name="pq5" value="Yes, enrolled but did not finish"><span class="ol">Yes, enrolled but did not finish</span></label>
         <label class="or"><input type="radio" name="pq5" value="Researched but did not enroll"><span class="ol">Researched but did not enroll</span></label>
-        <label class="or"><input type="radio" name="pq5" value="No, nunca considerei"><span class="ol">No, nunca considerei</span></label>
+        <label class="or"><input type="radio" name="pq5" value="No, never considered one"><span class="ol">No, never considered one</span></label>
       </div>
     </div>
 
@@ -234,7 +222,7 @@ select:focus{border-color:var(--blue)}
         <label class="or"><input type="radio" name="pq9" value="Less than 15 min"><span class="ol">Less than 15 min</span></label>
         <label class="or"><input type="radio" name="pq9" value="15–30 min"><span class="ol">15–30 min</span></label>
         <label class="or"><input type="radio" name="pq9" value="30–45 min"><span class="ol">30–45 min</span></label>
-        <label class="or"><input type="radio" name="pq9" value="No me deslocaria — apenas online"><span class="ol">No me deslocaria — apenas online</span></label>
+        <label class="or"><input type="radio" name="pq9" value="I wouldn't commute — online only"><span class="ol">I wouldn't commute — online only</span></label>
       </div>
     </div>
 
@@ -285,9 +273,7 @@ select:focus{border-color:var(--blue)}
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════
-     PÁGINA 2 — ENTREVISTA PRESENCIAL
-═══════════════════════════════════════════════════════ -->
+<!-- IN-PERSON INTERVIEW -->
 <div id="page-int" class="page">
   <div style="background:var(--blue);padding:18px 20px">
     <h2 style="color:#fff;font-size:17px;font-weight:600">One-on-One Interview Guide</h2>
@@ -295,8 +281,6 @@ select:focus{border-color:var(--blue)}
   </div>
 
   <div class="fw">
-
-    <!-- META -->
     <div class="qc" style="border-color:var(--blue)">
       <div style="font-size:13px;font-weight:500;margin-bottom:10px">Session info (private)</div>
       <div class="meta-grid">
@@ -334,7 +318,6 @@ select:focus{border-color:var(--blue)}
       </div>
     </div>
 
-    <!-- TEMPO -->
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:16px">
       <div style="background:#E8F0F8;border-radius:var(--rs);padding:7px 8px;text-align:center;font-size:11px;color:var(--blue);font-weight:500">Warm-up<br>2 min</div>
       <div style="background:#E8F0F8;border-radius:var(--rs);padding:7px 8px;text-align:center;font-size:11px;color:var(--blue);font-weight:500">Learning history<br>2 min</div>
@@ -342,7 +325,6 @@ select:focus{border-color:var(--blue)}
       <div style="background:var(--orange-lt);border-radius:var(--rs);padding:7px 8px;text-align:center;font-size:11px;color:var(--orange-dk);font-weight:500">Concept<br>6 min</div>
     </div>
 
-    <!-- Q1 Warm-up -->
     <div class="qc">
       <div class="qn">Q1 — Warm-up</div>
       <div class="qt">Tell me a bit about what you do professionally and where you're headed — career-wise, what's on your mind these days?</div>
@@ -350,23 +332,20 @@ select:focus{border-color:var(--blue)}
       <textarea name="iq1" placeholder="Notes from their answer..."></textarea>
     </div>
 
-    <!-- Q2 Learning history -->
     <div class="qc">
-      <div class="qn">Q2 — Learning history de aprendizado</div>
+      <div class="qn">Q2 — Learning history</div>
       <div class="qt">Have you ever taken a course, bootcamp, or training program to develop a professional skill? How did that go?</div>
       <div class="qh">Listen for: bootcamp experience, frustration with online-only, what worked vs what did not</div>
       <textarea name="iq2" placeholder="Notes from their answer..."></textarea>
     </div>
 
-    <!-- Q3 Learning history -->
     <div class="qc">
-      <div class="qn">Q3 — Learning history de aprendizado</div>
+      <div class="qn">Q3 — Learning history</div>
       <div class="qt">If you had to pick up a new technical skill today — say data analysis or digital marketing — how would you go about it?</div>
       <div class="qh">Listen for: self-directed vs structured instinct, online vs in-person preference</div>
       <textarea name="iq3" placeholder="Notes from their answer..."></textarea>
     </div>
 
-    <!-- BOOTCAMP Q1 -->
     <div class="qc" style="border-left:4px solid var(--orange)">
       <div class="qn" style="color:var(--orange-dk)">Bootcamp Q1</div>
       <div class="qt">Have you ever looked into a bootcamp — like DevPoint Labs, V School, Nucamp, or others? What made you consider it or not go for it?</div>
@@ -374,7 +353,6 @@ select:focus{border-color:var(--blue)}
       <textarea name="iq-b1" placeholder="Notes from their answer..."></textarea>
     </div>
 
-    <!-- BOOTCAMP Q2 -->
     <div class="qc" style="border-left:4px solid var(--orange)">
       <div class="qn" style="color:var(--orange-dk)">Bootcamp Q2</div>
       <div class="qt">Do you know anyone who did a bootcamp? How did it go for them — did they actually land a job or use the skills?</div>
@@ -382,7 +360,6 @@ select:focus{border-color:var(--blue)}
       <textarea name="iq-b2" placeholder="Notes from their answer..."></textarea>
     </div>
 
-    <!-- BOOTCAMP Q3 -->
     <div class="qc" style="border-left:4px solid var(--orange)">
       <div class="qn" style="color:var(--orange-dk)">Bootcamp Q3</div>
       <div class="qt">When you imagine an in-person class with 15–20 people, an instructor who works in the field, and a real project to build — how does that compare to what you have seen from bootcamps?</div>
@@ -390,7 +367,6 @@ select:focus{border-color:var(--blue)}
       <textarea name="iq-b3" placeholder="Notes from their answer..."></textarea>
     </div>
 
-    <!-- Q4 Logistics -->
     <div class="qc">
       <div class="qn">Q4 — Logistics check</div>
       <div class="qt">If there was an in-person program two evenings a week in Eagle Mountain or Lehi — say 6:30 to 9:30 PM — would that fit your life right now?</div>
@@ -403,7 +379,6 @@ select:focus{border-color:var(--blue)}
       </div>
     </div>
 
-    <!-- Q5 Valor -->
     <div class="qc">
       <div class="qn">Q5 — Value &amp; trust</div>
       <div class="qt">What would this program need to offer or prove for you to actually sign up — not just consider it?</div>
@@ -411,7 +386,6 @@ select:focus{border-color:var(--blue)}
       <textarea name="iq5" placeholder="Notes from their answer..."></textarea>
     </div>
 
-    <!-- Q6 Valor -->
     <div class="qc">
       <div class="qn">Q6 — Value &amp; trust</div>
       <div class="qt">What's the main thing that would stop you from doing it, even if it sounded great?</div>
@@ -419,7 +393,6 @@ select:focus{border-color:var(--blue)}
       <textarea name="iq6" placeholder="Notes from their answer..."></textarea>
     </div>
 
-    <!-- Q7 Concept -->
     <div class="qc">
       <div class="qn">Q7 — Concept test</div>
       <div class="qt">Four months, in-person twice a week evenings, real projects, instructors who work in the industry. Topics like data analytics, digital marketing, or AI automation. Pricing $3,500–$4,500. What is your gut reaction?</div>
@@ -429,7 +402,6 @@ select:focus{border-color:var(--blue)}
       <textarea class="note-area" name="iq7-n" placeholder="Body language, hesitation, energy level..."></textarea>
     </div>
 
-    <!-- Q8 Concept -->
     <div class="qc">
       <div class="qn">Q8 — Concept test</div>
       <div class="qt">If you could design the ideal version of this program for your situation, what would it look like?</div>
@@ -437,7 +409,6 @@ select:focus{border-color:var(--blue)}
       <textarea name="iq8" placeholder="Their exact words..."></textarea>
     </div>
 
-    <!-- SUA AVALIAÇÃO -->
     <div class="sl" style="border-color:var(--blue);color:var(--blue)">Your assessment (private)</div>
 
     <div class="qc">
@@ -477,16 +448,13 @@ select:focus{border-color:var(--blue)}
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════
-     PÁGINA 3 — DASHBOARD
-═══════════════════════════════════════════════════════ -->
+<!-- DASHBOARD -->
 <div id="page-dash" class="page">
   <div class="dh">
     <h2>Research Dashboard</h2>
     <span>Updates with each response</span>
   </div>
   <div class="dw">
-
     <div class="stats">
       <div class="sc o"><div class="sv" id="d-tot">0</div><div class="sl2">Total responses</div></div>
       <div class="sc b"><div class="sv" id="d-int">0</div><div class="sl2">In-person interviews</div></div>
@@ -499,7 +467,7 @@ select:focus{border-color:var(--blue)}
       <div class="cc"><div class="ct">Q4 — Format they trust most</div><canvas id="c-q4" height="200"></canvas></div>
       <div class="cc"><div class="ct">Q5 — Bootcamp experience</div><canvas id="c-q5" height="200"></canvas></div>
       <div class="cc"><div class="ct">Q6 — Biggest bootcamp frustration</div><canvas id="c-q6" height="200"></canvas></div>
-      <div class="cc"><div class="ct">Q8 — Schedule fit (yes)</div><canvas id="c-q8" height="200"></canvas></div>
+      <div class="cc"><div class="ct">Q8 — Schedule fit</div><canvas id="c-q8" height="200"></canvas></div>
       <div class="cc"><div class="ct">Q9 — Max commute</div><canvas id="c-q9" height="200"></canvas></div>
       <div class="cc"><div class="ct">Q11 — Price range</div><canvas id="c-q11" height="200"></canvas></div>
       <div class="cc full"><div class="ct">Q10 — Interest level distribution (1–5)</div><div class="cs">How interested are people in the program concept?</div><canvas id="c-q10" height="110"></canvas></div>
@@ -520,7 +488,7 @@ select:focus{border-color:var(--blue)}
       <div style="overflow-x:auto">
         <table class="rt" id="resp-tbl">
           <thead><tr>
-            <th>#</th><th>Tipo</th><th>Q1 Situation</th><th>Q4 Format</th><th>Q5 Bootcamp</th><th>Q8 Schedule</th><th>Q10</th><th>Q11 Price</th>
+            <th>#</th><th>Type</th><th>Q1 Situation</th><th>Q4 Format</th><th>Q5 Bootcamp</th><th>Q8 Schedule</th><th>Q10</th><th>Q11 Price</th>
           </tr></thead>
           <tbody id="resp-body"><tr><td colspan="8" class="es">No responses yet.</td></tr></tbody>
         </table>
@@ -566,7 +534,7 @@ function subPub(){
   const req=['pq1','pq2','pq4','pq5','pq8','pq9','pq11'];
   for(const q of req){if(!gr(q)){alert('Please answer all required questions (marked with *) before submitting.');return;}}
   if(!SV['pq10']){alert('Please select an interest level for Q10.');return;}
-  R.push({src:'Public survey',ts:new Date().toLocaleString('pt-BR'),
+  R.push({src:'Public survey',ts:new Date().toLocaleString('en-US'),
     q1:gr('pq1'),q2:gr('pq2'),q3:gcb('pq3').join(', '),
     q4:gr('pq4'),q5:gr('pq5'),q6:gr('pq6'),
     q7:gta('pq7'),q8:gr('pq8'),q9:gr('pq9'),
@@ -578,11 +546,11 @@ function subPub(){
 }
 
 function subInt(){
-  R.push({src:'Interview',ts:new Date().toLocaleString('pt-BR'),
-    nome:document.getElementById('i-name').value,
+  R.push({src:'Interview',ts:new Date().toLocaleString('en-US'),
+    name:document.getElementById('i-name').value,
     seg:document.getElementById('i-seg').value,
-    onde:document.getElementById('i-src').value,
-    data:document.getElementById('i-date').value,
+    where:document.getElementById('i-src').value,
+    date:document.getElementById('i-date').value,
     q1:gta('iq1'),q2:gta('iq2'),q3:gta('iq3'),
     bq1:gta('iq-b1'),bq2:gta('iq-b2'),bq3:gta('iq-b3'),
     q4:gr('iq4'),q5:gta('iq5'),q6:gta('iq6'),
@@ -594,8 +562,6 @@ function subInt(){
 
 function upd(){document.getElementById('bc').textContent=R.length;}
 
-function cnt(field,vals){return vals.map(v=>R.filter(r=>r[field]===v).length);}
-
 function render(){
   const tot=R.length;
   const ints=R.filter(r=>r.src==='Interview').length;
@@ -603,15 +569,15 @@ function render(){
   document.getElementById('d-int').textContent=ints;
   const ints10=R.map(r=>r.q10).filter(v=>v);
   document.getElementById('d-avg').textContent=ints10.length?(ints10.reduce((a,b)=>a+b,0)/ints10.length).toFixed(1):'—';
-  const sy=R.filter(r=>r.q8&&r.q8.startsWith('Sim')).length;
+  const sy=R.filter(r=>r.q8&&r.q8.startsWith('Yes')).length;
   document.getElementById('d-sch').textContent=tot?Math.round(sy/tot*100)+'%':'—';
 
   pie('c-q2','q2',['Yes, actively','Yes, thinking about it','Not right now','No'],['#FF6E00','#FA9A50','#CCCCCC','#5A5A6A']);
-  pie('c-q4','q4',['In-person classes','Hybrid','Live online classes','Fully online self-paced','No importa'],['#0F6E56','#5DCAA5','#1A3A5C','#85B7EB','#CCC']);
-  pie('c-q5','q5',['Yes, completed one','Yes, enrolled but did not finish','Researched but did not enroll','No, nunca considerei'],['#0F6E56','#FA9A50','#FF6E00','#CCC']);
+  pie('c-q4','q4',['In-person classes','Hybrid','Live online classes','Fully online self-paced',"Doesn't matter"],['#0F6E56','#5DCAA5','#1A3A5C','#85B7EB','#CCC']);
+  pie('c-q5','q5',['Yes, completed one','Yes, enrolled but did not finish','Researched but did not enroll','No, never considered one'],['#0F6E56','#FA9A50','#FF6E00','#CCC']);
   pie('c-q6','q6',['Price','Online-only format','No local in-person option','Lack of instructor support','Uncertain job outcomes','Too time-intensive','No issues — it was great','N/A — never looked into one'],['#CC2200','#FF6E00','#FA9A50','#1A3A5C','#5A5A6A','#888','#0F6E56','#CCC']);
   pie('c-q8','q8',['Yes, easily','Yes, with some adjustments','Very difficult','No'],['#0F6E56','#5DCAA5','#FA9A50','#CC2200']);
-  pie('c-q9','q9',['Less than 15 min','15–30 min','30–45 min','No me deslocaria — apenas online'],['#0F6E56','#5DCAA5','#FA9A50','#CC2200']);
+  pie('c-q9','q9',['Less than 15 min','15–30 min','30–45 min',"I wouldn't commute — online only"],['#0F6E56','#5DCAA5','#FA9A50','#CC2200']);
   pie('c-q11','q11',['Under $1,500','$1,500–$2,500','$2,500–$4,000','$4,000–$6,000','Over $6,000 if the outcome is guaranteed'],['#CC2200','#FA9A50','#FF6E00','#0F6E56','#085041']);
   bar('c-q10',R.map(r=>r.q10).filter(v=>v),[1,2,3,4,5],['#EEE','#FAC775','#FF9A50','#FF6E00','#CC4400']);
 
@@ -655,10 +621,10 @@ function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g
 function loadSample(){
   R.push(...[
     {src:'Public survey',q1:'Employed outside tech',q2:'Yes, actively',q4:'In-person classes',q5:'Researched but did not enroll',q6:'Price',q7:'Instructors who actually work in the field',q8:'Yes, with some adjustments',q9:'15–30 min',q10:4,q11:'$2,500–$4,000',q12:'Seeing real local graduates with real jobs',q13:'Time — I have two kids'},
-    {src:'Interview',q1:'Self-employed or business owner',q2:'Yes, thinking about it',q4:'In-person classes',q5:'No, nunca considerei',q8:'Yes, easily',q9:'15–30 min',q10:5,q11:'$2,500–$4,000',q12:'Testimonials from local people in my community',q13:'No tenho certeza se consigo aprender aos 45 anos'},
+    {src:'Interview',q1:'Self-employed or business owner',q2:'Yes, thinking about it',q4:'In-person classes',q5:'No, never considered one',q8:'Yes, easily',q9:'15–30 min',q10:5,q11:'$2,500–$4,000',q12:'Testimonials from local people in my community',q13:'Not sure I can learn at 45'},
     {src:'Public survey',q1:'Employed in tech',q2:'Not right now',q4:'Hybrid',q5:'Yes, completed one',q6:'Online-only format',q8:'Yes, easily',q9:'Less than 15 min',q10:3,q11:'$2,500–$4,000',q12:'Reputation from people in my ward',q13:'Already doing OK — needs a bigger pain point'},
-    {src:'Interview',q1:'Employed outside tech',q2:'Yes, actively',q4:'In-person classes',q5:'Yes, enrolled but did not finish',q6:'No local in-person option',q8:'Yes, with some adjustments',q9:'15–30 min',q10:5,q11:'$2,500–$4,000',q12:'Job placement stats and an employer who endorses the program',q13:'Price — mas aberta a parcelamento'},
-    {src:'Public survey',q1:'Currently job searching',q2:'Yes, actively',q4:'In-person classes',q5:'No, nunca considerei',q8:'Yes, easily',q9:'30–45 min',q10:4,q11:'$1,500–$2,500',q12:'Results guarantee',q13:'Financial risk — no savings'},
+    {src:'Interview',q1:'Employed outside tech',q2:'Yes, actively',q4:'In-person classes',q5:'Yes, enrolled but did not finish',q6:'No local in-person option',q8:'Yes, with some adjustments',q9:'15–30 min',q10:5,q11:'$2,500–$4,000',q12:'Job placement stats and an employer who endorses the program',q13:'Price — but open to payment plan'},
+    {src:'Public survey',q1:'Currently job searching',q2:'Yes, actively',q4:'In-person classes',q5:'No, never considered one',q8:'Yes, easily',q9:'30–45 min',q10:4,q11:'$1,500–$2,500',q12:'Results guarantee',q13:'Financial risk — no savings'},
   ]);
   upd();render();
   document.querySelector('.sb2').textContent='Sample data loaded';
