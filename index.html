@@ -4,7 +4,47 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Harve Utah — Market Research</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
+// ── PASSWORD PROTECTION ──────────────────────────────────────────
+const ADMIN_PW = 'harve2026';  // ← change this to your password
+let pwTarget = null;
+let pwBtn = null;
+let isAuth = false;
+
+function reqPw(id, btn) {
+  if (isAuth) { pg(id, btn); return; }
+  pwTarget = id;
+  pwBtn = btn;
+  document.getElementById('pw-input').value = '';
+  document.getElementById('pw-error').style.display = 'none';
+  const modal = document.getElementById('pw-modal');
+  modal.style.display = 'flex';
+  setTimeout(() => document.getElementById('pw-input').focus(), 100);
+}
+
+function checkPw() {
+  const val = document.getElementById('pw-input').value;
+  if (val === ADMIN_PW) {
+    isAuth = true;
+    closePw();
+    pg(pwTarget, pwBtn);
+  } else {
+    document.getElementById('pw-error').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+}
+
+function closePw() {
+  document.getElementById('pw-modal').style.display = 'none';
+}
+
+// Allow pressing Enter in password field
+document.getElementById('pw-input') && document.getElementById('pw-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkPw();
+});
+
+</script>
 <style>
 :root{
   --orange:#FF6E00;--orange-lt:#FFF0E6;--orange-dk:#8B3D00;
@@ -97,11 +137,25 @@ select:focus{border-color:var(--blue)}
 <nav>
   <div class="logo">HARVE<span>.</span></div>
   <div class="nav-links">
-    <button class="nb active" onclick="pg('pub',this)">Public survey</button>
-    <button class="nb" onclick="pg('int',this)">In-person interview</button>
-    <button class="nb" onclick="pg('dash',this)">Dashboard <span class="badge" id="bc">0</span></button>
+    <button class="nb active" id="btn-pub" onclick="pg('pub',this)">Public survey</button>
+    <button class="nb" id="btn-int" onclick="reqPw('int',this)">In-person interview</button>
+    <button class="nb" id="btn-dash" onclick="reqPw('dash',this)">Dashboard <span class="badge" id="bc">0</span></button>
   </div>
 </nav>
+
+<!-- PASSWORD MODAL -->
+<div id="pw-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;padding:32px 28px;max-width:360px;width:90%;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.3)">
+    <div style="font-size:32px;margin-bottom:12px">🔒</div>
+    <div style="font-size:17px;font-weight:600;color:#1E1E2A;margin-bottom:6px">Admin Access Only</div>
+    <div style="font-size:13px;color:#5A5A6A;margin-bottom:20px">This section is restricted. Please enter the password to continue.</div>
+    <input type="password" id="pw-input" placeholder="Enter password" style="width:100%;border:1.5px solid #DDDDDD;border-radius:8px;padding:10px 14px;font-size:14px;outline:none;margin-bottom:10px;text-align:center;font-family:inherit">
+    <div id="pw-error" style="color:#CC2200;font-size:12px;margin-bottom:10px;display:none">Incorrect password. Try again.</div>
+    <button onclick="checkPw()" style="width:100%;background:#FF6E00;color:#fff;border:none;border-radius:8px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:8px">Enter</button>
+    <button onclick="closePw()" style="width:100%;background:transparent;color:#5A5A6A;border:1px solid #DDDDDD;border-radius:8px;padding:10px;font-size:13px;cursor:pointer">Cancel</button>
+  </div>
+</div>
+
 
 <!-- PUBLIC SURVEY -->
 <div id="page-pub" class="page active">
@@ -499,6 +553,7 @@ select:focus{border-color:var(--blue)}
 </div>
 
 <script>
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbzeI2X-zB_ta7UXUeorLdfQizObN3N2gaOXuG7dbb_XUneucXZsqr5fy5zdj1fK_Qmk/exec";
 const R=[];const SV={};let CH={};
 
 function pg(id,btn){
@@ -540,6 +595,11 @@ function subPub(){
     q7:gta('pq7'),q8:gr('pq8'),q9:gr('pq9'),
     q10:SV['pq10'],q11:gr('pq11'),
     q12:gta('pq12'),q13:gta('pq13')});
+  // Save to Google Sheets
+  fetch(SCRIPT_URL, {
+    method:'POST',
+    body:JSON.stringify({type:'survey',q1:gr('pq1'),q2:gr('pq2'),q3:gcb('pq3').join(', '),q4:gr('pq4'),q5:gr('pq5'),q6:gr('pq6'),q7:gta('pq7'),q8:gr('pq8'),q9:gr('pq9'),q10:SV['pq10'],q11:gr('pq11'),q12:gta('pq12'),q13:gta('pq13')})
+  }).catch(()=>{});
   upd();
   document.getElementById('pub-ok').style.display='block';
   document.querySelector('.btn-orange').disabled=true;
@@ -556,6 +616,11 @@ function subInt(){
     q4:gr('iq4'),q5:gta('iq5'),q6:gta('iq6'),
     q7:gta('iq7'),q8:gta('iq8'),
     q10:SV['iass'],ins:gta('i-ins'),cand:gr('icand')});
+  // Save to Google Sheets
+  fetch(SCRIPT_URL, {
+    method:'POST',
+    body:JSON.stringify({type:'interview',name:document.getElementById('i-name').value,seg:document.getElementById('i-seg').value,where:document.getElementById('i-src').value,q1:gta('iq1'),q2:gta('iq2'),q3:gta('iq3'),bq1:gta('iq-b1'),bq2:gta('iq-b2'),bq3:gta('iq-b3'),q4:gr('iq4'),q5:gta('iq5'),q6:gta('iq6'),q7:gta('iq7'),q8:gta('iq8'),assessment:SV['iass'],insight:gta('i-ins'),candidate:gr('icand')})
+  }).catch(()=>{});
   upd();
   document.getElementById('int-ok').style.display='block';
 }
@@ -630,4 +695,44 @@ function loadSample(){
   document.querySelector('.sb2').textContent='Sample data loaded';
   document.querySelector('.sb2').disabled=true;
 }
+
+// ── PASSWORD PROTECTION ──────────────────────────────────────────
+const ADMIN_PW = 'harve2026';  // ← change this to your password
+let pwTarget = null;
+let pwBtn = null;
+let isAuth = false;
+
+function reqPw(id, btn) {
+  if (isAuth) { pg(id, btn); return; }
+  pwTarget = id;
+  pwBtn = btn;
+  document.getElementById('pw-input').value = '';
+  document.getElementById('pw-error').style.display = 'none';
+  const modal = document.getElementById('pw-modal');
+  modal.style.display = 'flex';
+  setTimeout(() => document.getElementById('pw-input').focus(), 100);
+}
+
+function checkPw() {
+  const val = document.getElementById('pw-input').value;
+  if (val === ADMIN_PW) {
+    isAuth = true;
+    closePw();
+    pg(pwTarget, pwBtn);
+  } else {
+    document.getElementById('pw-error').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+}
+
+function closePw() {
+  document.getElementById('pw-modal').style.display = 'none';
+}
+
+// Allow pressing Enter in password field
+document.getElementById('pw-input') && document.getElementById('pw-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkPw();
+});
+
 </script>
